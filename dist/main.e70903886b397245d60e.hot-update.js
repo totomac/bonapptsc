@@ -1,0 +1,28 @@
+exports.id = "main";
+exports.modules = {
+
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n/**\n * Required External Modules\n */\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst dotenv = __importStar(__webpack_require__(/*! dotenv */ \"dotenv\"));\nconst express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\nconst cors_1 = __importDefault(__webpack_require__(/*! cors */ \"cors\"));\nconst helmet_1 = __importDefault(__webpack_require__(/*! helmet */ \"helmet\"));\nconst recipes_router_1 = __webpack_require__(/*! ./items/recipes.router */ \"./src/items/recipes.router.ts\");\ndotenv.config();\n/**\n * App Variables\n */\nif (!process.env.PORT) {\n    process.exit(1);\n}\nconst PORT = parseInt(process.env.PORT, 10);\nconst app = express_1.default();\n/**\n *  App Configuration\n */\napp.use(helmet_1.default());\napp.use(cors_1.default());\napp.use(express_1.default.json());\napp.use(\"/recipes\", recipes_router_1.recipesRouter);\n/**\n * Server Activation\n */\n// define a route handler for the default home page\napp.get(\"/\", (req, res) => {\n    res.send(\"Hello world!\");\n});\n// start the Express server\napp.listen(PORT, () => {\n    // tslint:disable-next-line:no-console\n    console.log(`server started at http://localhost:${PORT}`);\n});\nif (true) {\n    module.hot.accept();\n    module.hot.dispose(() => server.close());\n}\n\n\n//# sourceURL=webpack:///./src/index.ts?");
+
+/***/ }),
+
+/***/ "./src/items/recipes.router.ts":
+/*!*************************************!*\
+  !*** ./src/items/recipes.router.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n/**\n * Required External Modules and Interfaces\n */\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\nconst RecipesService = __importStar(__webpack_require__(/*! ./recipes.service */ \"./src/items/recipes.service.ts\"));\n/**\n * Router Definition\n */\nexports.recipesRouter = express_1.default.Router();\n/**\n * Controller Definitions\n */\n// GET recipes/\nexports.recipesRouter.get(\"/\", (req, res) => __awaiter(void 0, void 0, void 0, function* () {\n    try {\n        const items = yield RecipesService.findAll();\n        res.status(200).send(items);\n    }\n    catch (e) {\n        res.status(404).send(e.message);\n    }\n}));\n// GET items/:id\nexports.recipesRouter.get(\"/:id\", (req, res) => __awaiter(void 0, void 0, void 0, function* () {\n    const id = parseInt(req.params.id, 10);\n    try {\n        const item = yield RecipesService.find(id);\n        res.status(200).send(item);\n    }\n    catch (e) {\n        res.status(404).send(e.message);\n    }\n}));\n// POST items/\nexports.recipesRouter.post(\"/\", (req, res) => __awaiter(void 0, void 0, void 0, function* () {\n    try {\n        const item = req.body.item;\n        yield RecipesService.create(item);\n        res.sendStatus(201);\n    }\n    catch (e) {\n        res.status(404).send(e.message);\n    }\n}));\n// PUT items/\nexports.recipesRouter.put(\"/\", (req, res) => __awaiter(void 0, void 0, void 0, function* () {\n    try {\n        const item = req.body.item;\n        yield RecipesService.update(item);\n        res.sendStatus(200);\n    }\n    catch (e) {\n        res.status(500).send(e.message);\n    }\n}));\n// DELETE items/:id\nexports.recipesRouter.delete(\"/:id\", (req, res) => __awaiter(void 0, void 0, void 0, function* () {\n    try {\n        const id = parseInt(req.params.id, 10);\n        yield RecipesService.remove(id);\n        res.sendStatus(200);\n    }\n    catch (e) {\n        res.status(500).send(e.message);\n    }\n}));\n\n\n//# sourceURL=webpack:///./src/items/recipes.router.ts?");
+
+/***/ })
+
+};
